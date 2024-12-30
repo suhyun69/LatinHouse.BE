@@ -24,10 +24,29 @@ Backend for LatinHouse
     - Spring Security
     - Validation
     - Spring Data JPA
+    - Spring Data MongoDB
 
 ### Additional Information
 - **Build Tool**: `Gradle`
 - **Language**: `Java`
+
+---
+
+# Database Information
+
+## MongoDB with Docker Compose
+
+### Docker Compose Configuration
+- **Host**: localhost
+- **Port**: 27017
+- **Username**: admin
+- **Password**: password
+- **Authentication Database**: admin
+- **URI**: mongodb://admin:password@localhost:27017/?authSource=admin
+
+### How to Start the Database
+1. docker compose up -d
+2. docker ps
 
 ---
 
