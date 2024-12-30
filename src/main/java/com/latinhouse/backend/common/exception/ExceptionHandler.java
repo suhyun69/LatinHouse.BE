@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.format.DateTimeParseException;
 
 @Slf4j
-@RestControllerAdvice
+// @RestControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final HttpStatus HTTP_BAD_REQUEST = HttpStatus.BAD_REQUEST;
