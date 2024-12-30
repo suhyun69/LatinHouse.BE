@@ -1,4 +1,4 @@
-package com.latinhouse.backend.profile.adapter.out.persistence.entity;
+package com.latinhouse.backend.profile.adapter.out.persistence.mapper;
 
 import com.latinhouse.backend.profile.adapter.out.persistence.entity.ProfileJpaEntity;
 import com.latinhouse.backend.profile.domain.Profile;

@@ -1,7 +1,7 @@
 package com.latinhouse.backend.profile.adapter.out.persistence;
 
 import com.latinhouse.backend.profile.adapter.out.persistence.entity.ProfileJpaEntity;
-import com.latinhouse.backend.profile.adapter.out.persistence.entity.ProfileJpaMapper;
+import com.latinhouse.backend.profile.adapter.out.persistence.mapper.ProfileJpaMapper;
 import com.latinhouse.backend.profile.adapter.out.persistence.repository.ProfileJpaRepository;
 import com.latinhouse.backend.profile.domain.Profile;
 import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
