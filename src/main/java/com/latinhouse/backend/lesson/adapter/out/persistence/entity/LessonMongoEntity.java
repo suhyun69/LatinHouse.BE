@@ -23,4 +23,17 @@ public class LessonMongoEntity {
 
     private Long no;
     private String title;
+    private String genre;
+    private String instructor1;
+    private String instructor2;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private String dateTimeSummary;
+    private String region;
+    private String location;
+    private List<LessonPriceMongoEntity> prices = new ArrayList<>();
+    private List<LessonDiscountMongoEntity> discounts = new ArrayList<>();
+    private List<LessonContactMongoEntity> contacts = new ArrayList<>();
+    private List<LessonAccountMongoEntity> accounts = new ArrayList<>();
+    private List<LessonNoticeMongoEntity> notices = new ArrayList<>();
 }

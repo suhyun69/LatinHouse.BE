@@ -8,6 +8,7 @@ import com.latinhouse.backend.lesson.port.in.GetLessonUseCase;
 import com.latinhouse.backend.lesson.port.in.request.CreateLessonAppRequest;
 import com.latinhouse.backend.lesson.port.in.response.CreateLessonAppResponse;
 import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
+import com.latinhouse.backend.lesson.port.in.response.LessonInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,8 @@ public class LessonController {
     }
 
     @GetMapping("/{no}")
-    public ResponseEntity<GetLessonWebResponse> getLessonByNo(@PathVariable Long no) {
-        GetLessonAppResponse appRes = getLessonUseCase.getLessonByNo(no);
-        return ResponseEntity.ok(new GetLessonWebResponse(appRes));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<GetLessonWebResponse>> getAllLessons() {
-        List<GetLessonAppResponse> appResList = getLessonUseCase.getAllLessons();
-        return ResponseEntity.ok(appResList.stream().map(GetLessonWebResponse::new).toList());
+    public ResponseEntity<LessonInfo> getLessonByNo(@PathVariable Long no) {
+        LessonInfo lessonInfo = getLessonUseCase.getLessonByNo(no);
+        return ResponseEntity.ok(lessonInfo);
     }
 }

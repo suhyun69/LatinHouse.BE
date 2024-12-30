@@ -12,6 +12,10 @@ public enum Sex {
         this.code = code;
     }
 
+    public String getCode() {
+        return code;
+    }
+
     public static Sex of(String code) {
         return Arrays.stream(Sex.values())
                 .filter(v -> v.code.equals(code))

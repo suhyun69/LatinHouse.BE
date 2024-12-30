@@ -1,7 +1,6 @@
 package com.latinhouse.backend.lesson.adapter.in.web.response;
 
-import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
-import com.latinhouse.backend.profile.port.in.response.GetProfileAppResponse;
+import com.latinhouse.backend.lesson.port.in.response.LessonInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,8 +10,8 @@ public class GetLessonWebResponse {
     private Long no;
     private String title;
 
-    public GetLessonWebResponse(GetLessonAppResponse appRes) {
-        this.no = appRes.getNo();
+    public GetLessonWebResponse(LessonInfo appRes) {
+        this.no = appRes.getLessonNo();
         this.title = appRes.getTitle();
     }
 }

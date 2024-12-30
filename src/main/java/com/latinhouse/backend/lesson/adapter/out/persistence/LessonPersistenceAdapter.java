@@ -48,7 +48,7 @@ public class LessonPersistenceAdapter implements
     @Override
     public Lesson getLessonByNo(Long no) {
 
-        LessonMongoEntity lessonT = lessonMongoRepository.findByNo(no)
+        LessonMongoEntity lessonT = lessonMongoRepository.findLessonMongoEntitiesByNo(no)
                 .orElseThrow(() -> new IllegalArgumentException("Lesson no " + no + " not found"));
 
         return lessonMongoMapper.mapToDomainEntity(lessonT);

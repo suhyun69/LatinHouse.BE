@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LessonMongoRepository extends MongoRepository<LessonMongoEntity, String> {
-    Optional<LessonMongoEntity> findByNo(Long no);
+    Optional<LessonMongoEntity> findLessonMongoEntitiesByNo(Long no);
 }
