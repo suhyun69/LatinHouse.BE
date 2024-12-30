@@ -30,9 +30,9 @@ public class LessonController {
         return ResponseEntity.ok(new CreateLessonWebResponse(appRes));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetLessonWebResponse> getLessonById(@PathVariable Long id) {
-        GetLessonAppResponse appRes = getLessonUseCase.getLessonById(id);
+    @GetMapping("/{no}")
+    public ResponseEntity<GetLessonWebResponse> getLessonByNo(@PathVariable Long no) {
+        GetLessonAppResponse appRes = getLessonUseCase.getLessonByNo(no);
         return ResponseEntity.ok(new GetLessonWebResponse(appRes));
     }
 

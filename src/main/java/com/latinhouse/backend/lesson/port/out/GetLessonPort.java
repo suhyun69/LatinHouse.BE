@@ -6,6 +6,6 @@ import com.latinhouse.backend.profile.domain.Profile;
 import java.util.List;
 
 public interface GetLessonPort {
-    Lesson getLessonById(Long id);
+    Lesson getLessonByNo(Long no);
     List<Lesson> getAllLessons();
 }

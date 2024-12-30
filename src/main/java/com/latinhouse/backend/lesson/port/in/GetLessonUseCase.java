@@ -5,6 +5,6 @@ import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
 import java.util.List;
 
 public interface GetLessonUseCase {
-    GetLessonAppResponse getLessonById(Long id);
+    GetLessonAppResponse getLessonByNo(Long no);
     List<GetLessonAppResponse> getAllLessons();
 }

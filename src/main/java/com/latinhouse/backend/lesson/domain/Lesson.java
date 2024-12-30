@@ -1,20 +1,27 @@
 package com.latinhouse.backend.lesson.domain;
 
-import com.latinhouse.backend.lesson.port.in.request.CreateLessonAppRequest;
-import com.latinhouse.backend.profile.domain.Sex;
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
 
-@Data
-@Builder
-@NoArgsConstructor
-// @AllArgsConstructor
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Value // 객체 불변(Immutable) => @Setter 생성되지 않음
+@Builder // mapToDomainEntity
 public class Lesson {
-
-    private Long no;
-    private String title;
-
-    public Lesson(Long no, String title) {
-        this.no = no;
-        this.title = title;
-    }
+    Long no;
+    String title;
+    Genre genre;
+    String instructor1;
+    String instructor2;
+    LocalDateTime startDateTime;
+    LocalDateTime endDateTime;
+    String datTimeSummary;
+    Region region;
+    String location;
+    List<LessonPrice> prices;
+    List<LessonDiscount> discounts;
+    List<LessonContact> contacts;
+    List<LessonAccount> accounts;
+    List<LessonNotice> notices;
 }

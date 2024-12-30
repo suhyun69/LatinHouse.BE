@@ -16,7 +16,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LessonService implements CreateLessonUseCase, GetLessonUseCase {
+public class LessonService implements
+        CreateLessonUseCase,
+        GetLessonUseCase
+{
 
     private final CreateLessonPort createLessonPort;
     private final GetLessonPort getLessonPort;
@@ -28,8 +31,8 @@ public class LessonService implements CreateLessonUseCase, GetLessonUseCase {
     }
 
     @Override
-    public GetLessonAppResponse getLessonById(Long id) {
-        Lesson lesson = getLessonPort.getLessonById(id);
+    public GetLessonAppResponse getLessonByNo(Long no) {
+        Lesson lesson = getLessonPort.getLessonByNo(no);
         return new GetLessonAppResponse(lesson);
     }
 
