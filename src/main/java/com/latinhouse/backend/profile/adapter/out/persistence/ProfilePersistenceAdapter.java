@@ -1,22 +1,24 @@
 package com.latinhouse.backend.profile.adapter.out.persistence;
 
+import com.latinhouse.backend.profile.adapter.out.persistence.entity.ProfileJpaEntity;
+import com.latinhouse.backend.profile.adapter.out.persistence.entity.ProfileJpaMapper;
+import com.latinhouse.backend.profile.adapter.out.persistence.repository.ProfileJpaRepository;
 import com.latinhouse.backend.profile.domain.Profile;
+import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
 import com.latinhouse.backend.profile.port.out.SaveProfilePort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
+@RequiredArgsConstructor
 public class ProfilePersistenceAdapter implements SaveProfilePort {
 
-    private final Map<Long, Profile> database = new HashMap<>();
-    private Long idCounter = 1L; // 간단한 ID 생성
+    private final ProfileJpaMapper profileJpaMapper;
+    private final ProfileJpaRepository profileJpaRepository;
 
     @Override
-    public Profile saveProfile(Profile profile) {
-        profile.setId(idCounter++);
-        database.put(profile.getId(), profile);
-        return profile;
+    public Profile saveProfile(CreateProfileAppRequest req) {
+        ProfileJpaEntity profileT = profileJpaMapper.mapToJpaEntity(req);
+        return profileJpaMapper.mapToDomainEntity(profileJpaRepository.save(profileT));
     }
 }

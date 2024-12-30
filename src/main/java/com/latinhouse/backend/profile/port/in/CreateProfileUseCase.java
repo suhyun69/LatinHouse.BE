@@ -1,7 +1,8 @@
 package com.latinhouse.backend.profile.port.in;
 
-import com.latinhouse.backend.profile.domain.Profile;
+import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
+import com.latinhouse.backend.profile.port.in.response.CreateProfileAppResponse;
 
 public interface CreateProfileUseCase {
-    Profile createProfile(Profile profile);
+    CreateProfileAppResponse createProfile(CreateProfileAppRequest appReq);
 }
