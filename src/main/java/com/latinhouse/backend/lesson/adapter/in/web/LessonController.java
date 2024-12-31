@@ -39,8 +39,8 @@ public class LessonController {
 
     @GetMapping("/{no}")
     @Operation(summary = "수업 조회", description = "수업을 조회합니다")
-    public ResponseEntity<LessonInfo> getLessonByNo(@PathVariable Long no) {
-        LessonInfo lessonInfo = getLessonUseCase.getLessonByNo(no);
-        return ResponseEntity.ok(lessonInfo);
+    public ResponseEntity<GetLessonAppResponse> getLessonByNo(@PathVariable Long no) {
+        GetLessonAppResponse appRes = getLessonUseCase.getLessonByNo(no);
+        return ResponseEntity.ok(appRes);
     }
 }

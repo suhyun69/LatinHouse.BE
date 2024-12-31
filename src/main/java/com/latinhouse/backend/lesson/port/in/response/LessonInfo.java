@@ -12,46 +12,48 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
-@AllArgsConstructor // test
-public class LessonInfo {
-    private Long lessonNo;
-    private String title;
-    private String genre;
-    private ProfileSummaryInfo instructor1;
-    private ProfileSummaryInfo instructor2;
-    private String startDate;
-    private String endDate;
-    private String startTime;
-    private String endTime;
+// @AllArgsConstructor // test
+public class LessonInfo extends GetLessonAppResponse{
+    // private Long lessonNo;
+    // private String title;
+    // private String genre;
+    // private ProfileSummaryInfo instructor1;
+    // private ProfileSummaryInfo instructor2;
+    // private String startDate;
+    // private String endDate;
+    // private String startTime;
+    // private String endTime;
     private String dateTimeSummary;
-    private String region;
+    // private String region;
     private String location;
-    private List<LessonPriceInfo> prices;
-    private List<LessonDiscountInfo> discounts;
+    // private List<LessonPriceInfo> prices;
+    // private List<LessonDiscountInfo> discounts;
     private List<LessonContactInfo> contacts;
     private List<LessonAccountInfo> accounts;
     private List<LessonNoticeInfo> notices;
 
     public LessonInfo(Lesson l, Profile instructor1, Profile instructor2) {
-        this.lessonNo = l.getNo();
-        this.title = l.getTitle();
-        this.genre = l.getGenre().name();
-        this.instructor1 = new ProfileSummaryInfo(instructor1);
-        this.instructor2 = Optional.ofNullable(instructor2).map(ProfileSummaryInfo::new).orElse(null);
-        this.startDate = l.getStartDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.endDate = l.getEndDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.startTime = l.getStartDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
-        this.endTime = l.getEndDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+        super(l, instructor1, instructor2);
+        // this.lessonNo = l.getNo();
+        // this.title = l.getTitle();
+        // this.genre = l.getGenre().name();
+        // this.instructor1 = new ProfileSummaryInfo(instructor1);
+        // this.instructor2 = Optional.ofNullable(instructor2).map(ProfileSummaryInfo::new).orElse(null);
+        // this.startDate = l.getStartDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        // this.endDate = l.getEndDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        // this.startTime = l.getStartDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+        // this.endTime = l.getEndDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
         this.dateTimeSummary = l.getDatTimeSummary();
-        this.region = l.getRegion().name();
+        // this.region = l.getRegion().name();
         this.location = l.getLocation();
-        this.prices = l.getPrices().stream().map(LessonPriceInfo::new).collect(Collectors.toList());
-        this.discounts = l.getDiscounts().stream().map(LessonDiscountInfo::new).collect(Collectors.toList());
+        // this.prices = l.getPrices().stream().map(LessonPriceInfo::new).collect(Collectors.toList());
+        // this.discounts = l.getDiscounts().stream().map(LessonDiscountInfo::new).collect(Collectors.toList());
         this.contacts = l.getContacts().stream().map(LessonContactInfo::new).collect(Collectors.toList());
         this.accounts = l.getAccounts().stream().map(LessonAccountInfo::new).collect(Collectors.toList());
         this.notices = l.getNotices().stream().map(LessonNoticeInfo::new).collect(Collectors.toList());
     }
 
+    /*
     @Getter
     @AllArgsConstructor // test
     public static class ProfileSummaryInfo {
@@ -63,7 +65,9 @@ public class LessonInfo {
             this.nickname = p.getNickname();
         }
     }
+    */
 
+    /*
     @Getter
     @AllArgsConstructor // test
     public static class LessonPriceInfo {
@@ -75,7 +79,9 @@ public class LessonInfo {
             this.price = p.getPrice();
         }
     }
+    */
 
+    /*
     @Getter
     @AllArgsConstructor // test
     public static class LessonDiscountInfo {
@@ -89,6 +95,7 @@ public class LessonInfo {
             this.amount = d.getAmount();
         }
     }
+    */
 
     @Getter
     @AllArgsConstructor // test
