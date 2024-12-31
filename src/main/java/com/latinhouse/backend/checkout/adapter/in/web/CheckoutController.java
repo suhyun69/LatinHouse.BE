@@ -12,6 +12,7 @@ import com.latinhouse.backend.profile.port.in.response.CreateProfileAppResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jdk.jshell.Snippet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,9 @@ public class CheckoutController {
 
     @PostMapping
     @Operation(summary = "수업 신청", description = "수업을 신청합니다")
-    public ResponseEntity<EnrollLessonWebResponse> enrollLesson(@RequestBody @Valid EnrollLessonWebRequest webReq) {
+    public ResponseEntity<String> enrollLesson(@RequestBody @Valid EnrollLessonWebRequest webReq) {
         EnrollLessonAppRequest appReq = new EnrollLessonAppRequest(webReq);
-        EnrollLessonAppResponse appRes = enrollLessonUseCase.enrollLesson(appReq);
-        return ResponseEntity.ok(new EnrollLessonWebResponse(appRes));
+        enrollLessonUseCase.enqueueKafka(appReq);
+        return ResponseEntity.ok("Success");
     }
 }

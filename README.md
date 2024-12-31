@@ -25,6 +25,7 @@ Backend for LatinHouse
     - Validation
     - Spring Data JPA
     - Spring Data MongoDB
+    - Spring-Kafka
 
 ### Additional Information
 - **Build Tool**: `Gradle`

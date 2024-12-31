@@ -34,3 +34,13 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:password@localhost:27017/latinhouse?authSource=admin
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: your-group-id
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.value.default.type: com.latinhouse.backend.checkout.port.in.request.EnrollLessonAppRequest
+        spring.json.trusted.packages: '*'
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

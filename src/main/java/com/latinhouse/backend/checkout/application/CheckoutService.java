@@ -5,9 +5,8 @@ import com.latinhouse.backend.checkout.port.in.EnrollLessonUseCase;
 import com.latinhouse.backend.checkout.port.in.request.EnrollLessonAppRequest;
 import com.latinhouse.backend.checkout.port.in.response.EnrollLessonAppResponse;
 import com.latinhouse.backend.checkout.port.out.CreateOrderPort;
-import com.latinhouse.backend.profile.domain.Profile;
-import com.latinhouse.backend.profile.port.in.response.CreateProfileAppResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +16,15 @@ public class CheckoutService implements
 {
     private final CreateOrderPort createOrderPort;
 
+    private final KafkaTemplate<String, EnrollLessonAppRequest> kafkaTemplate;
+
     @Override
-    public EnrollLessonAppResponse enrollLesson(EnrollLessonAppRequest appReq) {
+    public void enqueueKafka(EnrollLessonAppRequest appReq) {
+        kafkaTemplate.send("test-topic", appReq);
+    }
+
+    @Override
+    public void enrollLesson(EnrollLessonAppRequest appReq) {
         Order order = createOrderPort.createOrder(appReq);
-        return new EnrollLessonAppResponse(order);
     }
 }
