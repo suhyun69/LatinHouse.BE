@@ -5,6 +5,7 @@ import com.latinhouse.backend.profile.adapter.in.web.response.CreateProfileWebRe
 import com.latinhouse.backend.profile.adapter.in.web.response.GetProfileWebResponse;
 import com.latinhouse.backend.profile.port.in.CreateProfileUseCase;
 import com.latinhouse.backend.profile.port.in.GetProfileUseCase;
+import com.latinhouse.backend.profile.port.in.UpdateProfileUseCase;
 import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
 import com.latinhouse.backend.profile.port.in.response.CreateProfileAppResponse;
 import com.latinhouse.backend.profile.port.in.response.GetProfileAppResponse;
@@ -22,6 +23,7 @@ public class ProfileController {
 
     private final CreateProfileUseCase createProfileUseCase;
     private final GetProfileUseCase getProfileUseCase;
+    private final UpdateProfileUseCase updateProfileUseCase;
 
     @PostMapping
     public ResponseEntity<CreateProfileWebResponse> createProfile(@RequestBody @Valid CreateProfileWebRequest webReq) {
@@ -42,5 +44,12 @@ public class ProfileController {
     public ResponseEntity<List<GetProfileWebResponse>> getAllProfiles() {
         List<GetProfileAppResponse> appResList = getProfileUseCase.getAllProfiles();
         return ResponseEntity.ok(appResList.stream().map(GetProfileWebResponse::new).toList());
+    }
+
+    // 강사 등록
+    @PutMapping("/{id}")
+    public ResponseEntity<GetProfileWebResponse> updateIsInstructor(@PathVariable String id) {
+        GetProfileAppResponse appRes = updateProfileUseCase.updateIsInstructor(id);
+        return ResponseEntity.ok(new GetProfileWebResponse(appRes));
     }
 }

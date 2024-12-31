@@ -22,6 +22,16 @@ public class ProfileJpaMapper {
                 .build();
     }
 
+    public ProfileJpaEntity mapToJpaEntity(Profile profile) {
+        return ProfileJpaEntity.builder()
+                .id(profile.getId())
+                .nickname(profile.getNickname())
+                .password(profile.getPassword())
+                .sex(profile.getSex().getCode())
+                .isInstructor(profile.getIsInstructor())
+                .build();
+    }
+
     public Profile mapToDomainEntity(ProfileJpaEntity profileT) {
         return Profile.builder()
                 .id(profileT.getId())

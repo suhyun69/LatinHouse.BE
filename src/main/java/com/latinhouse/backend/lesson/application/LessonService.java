@@ -29,6 +29,19 @@ public class LessonService implements
 
     @Override
     public CreateLessonAppResponse createLesson(CreateLessonAppRequest appReq) {
+
+        Profile instructor1 = getProfilePort.getProfileById(appReq.getInstructor1());
+        if(!instructor1.getIsInstructor()) {
+            throw new IllegalArgumentException("Profile ID " + appReq.getInstructor1() + " is not instructor");
+        }
+        Profile instructor2 = null;
+        if(Optional.ofNullable(appReq.getInstructor2()).isPresent()) {
+            instructor2 = getProfilePort.getProfileById(appReq.getInstructor2());
+            if(!instructor2.getIsInstructor()) {
+                throw new IllegalArgumentException("Profile ID " + appReq.getInstructor2() + " is not instructor");
+            }
+        }
+
         Lesson lesson = createLessonPort.createLesson(appReq);
         return new CreateLessonAppResponse(lesson);
     }

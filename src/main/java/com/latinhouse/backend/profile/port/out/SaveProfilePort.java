@@ -5,4 +5,5 @@ import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
 
 public interface SaveProfilePort {
     Profile saveProfile(CreateProfileAppRequest profile);
+    Profile updateProfile(Profile profile);
 }

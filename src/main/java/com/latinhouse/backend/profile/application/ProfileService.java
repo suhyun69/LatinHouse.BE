@@ -3,6 +3,7 @@ package com.latinhouse.backend.profile.application;
 import com.latinhouse.backend.profile.domain.Profile;
 import com.latinhouse.backend.profile.port.in.CreateProfileUseCase;
 import com.latinhouse.backend.profile.port.in.GetProfileUseCase;
+import com.latinhouse.backend.profile.port.in.UpdateProfileUseCase;
 import com.latinhouse.backend.profile.port.in.request.CreateProfileAppRequest;
 import com.latinhouse.backend.profile.port.in.response.CreateProfileAppResponse;
 import com.latinhouse.backend.profile.port.in.response.GetProfileAppResponse;
@@ -17,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProfileService implements
         CreateProfileUseCase,
-        GetProfileUseCase
+        GetProfileUseCase,
+        UpdateProfileUseCase
 {
 
     private final SaveProfilePort saveProfilePort;
@@ -39,5 +41,14 @@ public class ProfileService implements
     public List<GetProfileAppResponse> getAllProfiles() {
         List<Profile> profileList = getProfilePort.getAllProfiles();
         return profileList.stream().map(GetProfileAppResponse::new).toList();
+    }
+
+    @Override
+    public GetProfileAppResponse updateIsInstructor(String id) {
+        Profile profile = getProfilePort.getProfileById(id);
+        profile.setIsInstructor(true);
+        saveProfilePort.updateProfile(profile);
+
+        return new GetProfileAppResponse(profile);
     }
 }

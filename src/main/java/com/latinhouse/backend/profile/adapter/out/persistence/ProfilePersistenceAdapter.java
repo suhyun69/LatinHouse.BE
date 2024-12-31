@@ -40,4 +40,10 @@ public class ProfilePersistenceAdapter implements
         List<ProfileJpaEntity> profileTList = profileJpaRepository.findAll();
         return profileTList.stream().map(profileJpaMapper::mapToDomainEntity).toList();
     }
+
+    @Override
+    public Profile updateProfile(Profile profile) {
+        ProfileJpaEntity profileT = profileJpaRepository.save(profileJpaMapper.mapToJpaEntity(profile));
+        return profileJpaMapper.mapToDomainEntity(profileT);
+    }
 }
