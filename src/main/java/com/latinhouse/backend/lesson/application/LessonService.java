@@ -5,7 +5,9 @@ import com.latinhouse.backend.lesson.port.in.CreateLessonUseCase;
 import com.latinhouse.backend.lesson.port.in.GetLessonUseCase;
 import com.latinhouse.backend.lesson.port.in.request.CreateLessonAppRequest;
 import com.latinhouse.backend.lesson.port.in.response.CreateLessonAppResponse;
-import com.latinhouse.backend.lesson.port.in.response.LessonInfo;
+import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
+import com.latinhouse.backend.lesson.port.in.response.LessonDetailInfo;
+import com.latinhouse.backend.lesson.port.in.response.LessonSummaryInfo;
 import com.latinhouse.backend.lesson.port.out.CreateLessonPort;
 import com.latinhouse.backend.lesson.port.out.GetLessonPort;
 import com.latinhouse.backend.profile.domain.Profile;
@@ -13,6 +15,8 @@ import com.latinhouse.backend.profile.port.out.GetProfilePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,7 +51,7 @@ public class LessonService implements
     }
 
     @Override
-    public LessonInfo getLessonByNo(Long no) {
+    public GetLessonAppResponse getLessonByNo(Long no) {
         Lesson lesson = getLessonPort.getLessonByNo(no);
 
         Profile instructor1 = getProfilePort.getProfileById(lesson.getInstructor1());
@@ -56,6 +60,24 @@ public class LessonService implements
             instructor2 = getProfilePort.getProfileById(lesson.getInstructor2());
         }
 
-        return new LessonInfo(lesson, instructor1, instructor2);
+        return new LessonDetailInfo(lesson, instructor1, instructor2);
+    }
+
+    @Override
+    public List<GetLessonAppResponse> getAllLessons() {
+
+        List<GetLessonAppResponse> appResList = new ArrayList<>();
+
+        List<Lesson> lessonList = getLessonPort.getAllLessons();
+        for(Lesson lesson: lessonList) {
+            Profile instructor1 = getProfilePort.getProfileById(lesson.getInstructor1());
+            Profile instructor2 = null;
+            if(Optional.ofNullable(lesson.getInstructor2()).isPresent()) {
+                instructor2 = getProfilePort.getProfileById(lesson.getInstructor2());
+            }
+            appResList.add(new LessonSummaryInfo(lesson, instructor1, instructor2));
+        }
+
+        return appResList;
     }
 }

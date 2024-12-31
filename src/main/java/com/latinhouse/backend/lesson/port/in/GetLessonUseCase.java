@@ -1,10 +1,11 @@
 package com.latinhouse.backend.lesson.port.in;
 
 import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
-import com.latinhouse.backend.lesson.port.in.response.LessonInfo;
+import com.latinhouse.backend.lesson.port.in.response.LessonDetailInfo;
 
 import java.util.List;
 
 public interface GetLessonUseCase {
-    LessonInfo getLessonByNo(Long no);
+    GetLessonAppResponse getLessonByNo(Long no);
+    List<GetLessonAppResponse> getAllLessons();
 }

@@ -62,7 +62,7 @@ public class LessonPersistenceAdapter implements
 
     @Override
     public List<Lesson> getAllLessons() {
-        List<LessonJpaEntity> lessonTList = lessonJpaRepository.findAll();
-        return lessonTList.stream().map(lessonJpaMapper::mapToDomainEntity).toList();
+        List<LessonMongoEntity> lessonTList = lessonMongoRepository.findAll();
+        return lessonTList.stream().map(lessonMongoMapper::mapToDomainEntity).toList();
     }
 }

@@ -5,15 +5,12 @@ import com.latinhouse.backend.profile.domain.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
 // @AllArgsConstructor // test
-public class LessonInfo extends GetLessonAppResponse{
+public class LessonDetailInfo extends GetLessonAppResponse{
     // private Long lessonNo;
     // private String title;
     // private String genre;
@@ -32,7 +29,7 @@ public class LessonInfo extends GetLessonAppResponse{
     private List<LessonAccountInfo> accounts;
     private List<LessonNoticeInfo> notices;
 
-    public LessonInfo(Lesson l, Profile instructor1, Profile instructor2) {
+    public LessonDetailInfo(Lesson l, Profile instructor1, Profile instructor2) {
         super(l, instructor1, instructor2);
         // this.lessonNo = l.getNo();
         // this.title = l.getTitle();

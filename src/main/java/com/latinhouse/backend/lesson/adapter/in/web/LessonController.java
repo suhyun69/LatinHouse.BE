@@ -2,13 +2,11 @@ package com.latinhouse.backend.lesson.adapter.in.web;
 
 import com.latinhouse.backend.lesson.adapter.in.web.request.CreateLessonWebRequest;
 import com.latinhouse.backend.lesson.adapter.in.web.response.CreateLessonWebResponse;
-import com.latinhouse.backend.lesson.adapter.in.web.response.GetLessonWebResponse;
 import com.latinhouse.backend.lesson.port.in.CreateLessonUseCase;
 import com.latinhouse.backend.lesson.port.in.GetLessonUseCase;
 import com.latinhouse.backend.lesson.port.in.request.CreateLessonAppRequest;
 import com.latinhouse.backend.lesson.port.in.response.CreateLessonAppResponse;
 import com.latinhouse.backend.lesson.port.in.response.GetLessonAppResponse;
-import com.latinhouse.backend.lesson.port.in.response.LessonInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -41,6 +39,13 @@ public class LessonController {
     @Operation(summary = "수업 조회", description = "수업을 조회합니다")
     public ResponseEntity<GetLessonAppResponse> getLessonByNo(@PathVariable Long no) {
         GetLessonAppResponse appRes = getLessonUseCase.getLessonByNo(no);
+        return ResponseEntity.ok(appRes);
+    }
+
+    @GetMapping
+    @Operation(summary = "수업 조회", description = "모든 수업을 조회합니다")
+    public ResponseEntity<List<GetLessonAppResponse>> getAllLessons() {
+        List<GetLessonAppResponse> appRes = getLessonUseCase.getAllLessons();
         return ResponseEntity.ok(appRes);
     }
 }
