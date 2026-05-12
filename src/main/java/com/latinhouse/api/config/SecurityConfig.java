@@ -51,6 +51,11 @@ public class SecurityConfig {
                                 "/api/v1/profiles",
                                 "/api/v1/profiles/**"
                         ).permitAll()
+                        // Order: JWT 미구현으로 전체 임시 허용 (추후 authenticated()로 변경 예정)
+                        .requestMatchers(
+                                "/api/v1/orders",
+                                "/api/v1/orders/**"
+                        ).permitAll()
                         .anyRequest().permitAll()
                 );
 

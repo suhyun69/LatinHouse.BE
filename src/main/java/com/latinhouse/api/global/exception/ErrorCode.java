@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     LESSON_NOT_FOUND("레슨을 찾을 수 없습니다", HttpStatus.NOT_FOUND),
+    LESSON_OPTION_NOT_FOUND("레슨 옵션을 찾을 수 없습니다", HttpStatus.NOT_FOUND),
     PROFILE_NOT_FOUND("프로필을 찾을 수 없습니다", HttpStatus.NOT_FOUND),
+    ORDER_NOT_FOUND("주문을 찾을 수 없습니다", HttpStatus.NOT_FOUND),
 
     NOT_AN_INSTRUCTOR("강사로 등록된 프로필이 아닙니다", HttpStatus.BAD_REQUEST),
     SEX_MISMATCH("강사의 성별이 일치하지 않습니다", HttpStatus.BAD_REQUEST),
