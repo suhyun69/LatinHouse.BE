@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,6 +37,15 @@ public class GlobalExceptionHandler {
                         .field("profileId")
                         .message("프로필을 찾을 수 없습니다.")
                         .build()))
+                .build();
+    }
+
+    @ExceptionHandler(LessonValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleLessonValidationException(LessonValidationException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errors(ex.getErrors())
                 .build();
     }
 }
