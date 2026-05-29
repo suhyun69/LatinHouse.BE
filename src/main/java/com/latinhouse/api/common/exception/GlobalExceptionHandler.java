@@ -26,4 +26,16 @@ public class GlobalExceptionHandler {
                 .errors(errors)
                 .build();
     }
+
+    @ExceptionHandler(ProfileNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleProfileNotFoundException(ProfileNotFoundException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field("profileId")
+                        .message("프로필을 찾을 수 없습니다.")
+                        .build()))
+                .build();
+    }
 }

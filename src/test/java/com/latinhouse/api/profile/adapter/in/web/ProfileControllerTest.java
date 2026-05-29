@@ -3,8 +3,11 @@ package com.latinhouse.api.profile.adapter.in.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.latinhouse.api.common.config.SecurityConfig;
 import com.latinhouse.api.common.exception.GlobalExceptionHandler;
+import com.latinhouse.api.common.exception.ProfileNotFoundException;
 import com.latinhouse.api.profile.application.port.in.CreateProfileAppResponse;
 import com.latinhouse.api.profile.application.port.in.CreateProfileUseCase;
+import com.latinhouse.api.profile.application.port.in.SetInstructorAppResponse;
+import com.latinhouse.api.profile.application.port.in.SetInstructorUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -17,6 +20,7 @@ import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +36,9 @@ class ProfileControllerTest {
 
     @MockitoBean
     private CreateProfileUseCase createProfileUseCase;
+
+    @MockitoBean
+    private SetInstructorUseCase setInstructorUseCase;
 
     @Test
     void createProfile_validRequest_returns201WithId() throws Exception {
@@ -76,5 +83,36 @@ class ProfileControllerTest {
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.errors[0].field").value("sex"))
                 .andExpect(jsonPath("$.errors[0].message").value("성별은 M 또는 F만 입력 가능합니다."));
+    }
+
+    @Test
+    void setInstructor_validProfileId_returns200WithId() throws Exception {
+        when(setInstructorUseCase.setInstructor(any()))
+                .thenReturn(SetInstructorAppResponse.builder().id("Ab2Cd3Ef").build());
+
+        mockMvc.perform(patch("/api/profile/Ab2Cd3Ef/instructor"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("Ab2Cd3Ef"));
+    }
+
+    @Test
+    void setInstructor_nonExistentProfile_returns404() throws Exception {
+        when(setInstructorUseCase.setInstructor(any()))
+                .thenThrow(new ProfileNotFoundException("NOTEXIST"));
+
+        mockMvc.perform(patch("/api/profile/NOTEXIST/instructor"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.errors[0].field").value("profileId"));
+    }
+
+    @Test
+    void setInstructor_alreadyInstructor_returns200Idempotently() throws Exception {
+        when(setInstructorUseCase.setInstructor(any()))
+                .thenReturn(SetInstructorAppResponse.builder().id("Ab2Cd3Ef").build());
+
+        mockMvc.perform(patch("/api/profile/Ab2Cd3Ef/instructor"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("Ab2Cd3Ef"));
     }
 }
