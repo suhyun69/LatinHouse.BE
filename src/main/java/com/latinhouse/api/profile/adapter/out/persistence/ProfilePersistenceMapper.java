@@ -3,7 +3,7 @@ package com.latinhouse.api.profile.adapter.out.persistence;
 import com.latinhouse.api.profile.domain.Profile;
 import com.latinhouse.api.profile.domain.Sex;
 
-class ProfilePersistenceMapper {
+public class ProfilePersistenceMapper {
 
     private ProfilePersistenceMapper() {}
 
@@ -16,7 +16,7 @@ class ProfilePersistenceMapper {
                 .build();
     }
 
-    static Profile toDomain(ProfileEntity entity) {
+    public static Profile toDomain(ProfileEntity entity) {
         return Profile.builder()
                 .id(entity.getId())
                 .nickname(entity.getNickname())
