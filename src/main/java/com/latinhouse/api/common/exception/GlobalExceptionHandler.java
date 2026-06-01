@@ -60,4 +60,16 @@ public class GlobalExceptionHandler {
                         .build()))
                 .build();
     }
+
+    @ExceptionHandler(LessonNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleLessonNotFoundException(LessonNotFoundException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field("lessonNo")
+                        .message("레슨을 찾을 수 없습니다.")
+                        .build()))
+                .build();
+    }
 }
