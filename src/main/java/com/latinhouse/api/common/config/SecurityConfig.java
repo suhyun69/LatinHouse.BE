@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/profile").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/profile/*/instructor").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/profiles").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/lesson").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()

@@ -7,6 +7,7 @@ import com.latinhouse.api.profile.domain.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,6 +27,16 @@ class ProfilePersistenceAdapter implements SaveProfilePort, FindProfilePort, Upd
     public Optional<Profile> findById(String profileId) {
         return profileJpaRepository.findById(profileId)
                 .map(ProfilePersistenceMapper::toDomain);
+    }
+
+    @Override
+    public List<Profile> findAll(Boolean isInstructor) {
+        List<ProfileEntity> entities = (isInstructor == null)
+                ? profileJpaRepository.findAll()
+                : profileJpaRepository.findAllByIsInstructor(isInstructor);
+        return entities.stream()
+                .map(ProfilePersistenceMapper::toDomain)
+                .toList();
     }
 
     @Override

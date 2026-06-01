@@ -48,4 +48,16 @@ public class GlobalExceptionHandler {
                 .errors(ex.getErrors())
                 .build();
     }
+
+    @ExceptionHandler(InvalidParamException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidParamException(InvalidParamException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field(ex.getField())
+                        .message(ex.getMessage())
+                        .build()))
+                .build();
+    }
 }
