@@ -73,6 +73,18 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(LessonOptionNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleLessonOptionNotFoundException(LessonOptionNotFoundException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field("lessonOptionNo")
+                        .message("레슨 옵션을 찾을 수 없습니다.")
+                        .build()))
+                .build();
+    }
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleRuntimeException(RuntimeException ex) {
