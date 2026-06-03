@@ -7,6 +7,7 @@ import com.latinhouse.api.lesson.application.port.in.CreateRandomLessonAppRespon
 import com.latinhouse.api.lesson.application.port.in.CreateRandomLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonsUseCase;
+import com.latinhouse.api.lesson.application.port.in.UpdateLessonUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -37,6 +38,9 @@ class CreateRandomLessonControllerTest {
 
     @MockitoBean
     private GetLessonsUseCase getLessonsUseCase;
+
+    @MockitoBean
+    private UpdateLessonUseCase updateLessonUseCase;
 
     @Test
     void createRandomLesson_returns201WithId() throws Exception {

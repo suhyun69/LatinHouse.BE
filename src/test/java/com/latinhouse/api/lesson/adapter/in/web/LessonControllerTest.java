@@ -10,6 +10,7 @@ import com.latinhouse.api.lesson.application.port.in.GetLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonsAppResponse;
 import com.latinhouse.api.lesson.application.port.in.GetLessonsUseCase;
+import com.latinhouse.api.lesson.application.port.in.UpdateLessonUseCase;
 import com.latinhouse.api.lesson.domain.Genre;
 import com.latinhouse.api.lesson.domain.Region;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,9 @@ class LessonControllerTest {
 
     @MockitoBean
     private GetLessonsUseCase getLessonsUseCase;
+
+    @MockitoBean
+    private UpdateLessonUseCase updateLessonUseCase;
 
     @Test
     void createLesson_validRequest_returns201WithId() throws Exception {
