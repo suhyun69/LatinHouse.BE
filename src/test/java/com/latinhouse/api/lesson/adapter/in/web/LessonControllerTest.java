@@ -7,6 +7,8 @@ import com.latinhouse.api.lesson.application.port.in.CreateLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.in.CreateLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
+import com.latinhouse.api.lesson.application.port.in.GetLessonsAppResponse;
+import com.latinhouse.api.lesson.application.port.in.GetLessonsUseCase;
 import com.latinhouse.api.lesson.domain.Genre;
 import com.latinhouse.api.lesson.domain.Region;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,6 +48,9 @@ class LessonControllerTest {
 
     @MockitoBean
     private GetLessonUseCase getLessonUseCase;
+
+    @MockitoBean
+    private GetLessonsUseCase getLessonsUseCase;
 
     @Test
     void createLesson_validRequest_returns201WithId() throws Exception {
@@ -162,6 +168,59 @@ class LessonControllerTest {
                 .andExpect(jsonPath("$.contacts").isEmpty())
                 .andExpect(jsonPath("$.isActive").value(true))
                 .andExpect(jsonPath("$.notices").isEmpty());
+    }
+
+    @Test
+    void getLessons_noFilter_returns200WithList() throws Exception {
+        GetLessonsAppResponse item = GetLessonsAppResponse.builder()
+                .optionId(1L).lessonNo(10L)
+                .instructorLo("Ab2Cd3Ef").instructorLa(null)
+                .title("살사 초급반").genre("S")
+                .startDate("2026-07-01").startTime("10:00")
+                .endDate("2026-07-01").endTime("12:00")
+                .region("GN").price(new BigDecimal("80000"))
+                .discountCondition("2026-06-20").discountAmount(new BigDecimal("10000"))
+                .status("PENDING")
+                .build();
+
+        when(getLessonsUseCase.getLessons(any())).thenReturn(List.of(item));
+
+        mockMvc.perform(get("/api/lessons"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].optionId").value(1))
+                .andExpect(jsonPath("$[0].lessonNo").value(10))
+                .andExpect(jsonPath("$[0].title").value("살사 초급반"))
+                .andExpect(jsonPath("$[0].genre").value("S"))
+                .andExpect(jsonPath("$[0].region").value("GN"))
+                .andExpect(jsonPath("$[0].status").value("PENDING"))
+                .andExpect(jsonPath("$[0].discountCondition").value("2026-06-20"))
+                .andExpect(jsonPath("$[0].discountAmount").value(10000));
+    }
+
+    @Test
+    void getLessons_emptyResult_returns200WithEmptyArray() throws Exception {
+        when(getLessonsUseCase.getLessons(any())).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/lessons"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    void getLessons_invalidRegion_returns400() throws Exception {
+        mockMvc.perform(get("/api/lessons").param("region", "XX"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errors[0].field").value("region"));
+    }
+
+    @Test
+    void getLessons_invalidGenre_returns400() throws Exception {
+        mockMvc.perform(get("/api/lessons").param("genre", "X"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errors[0].field").value("genre"));
     }
 
     @Test
