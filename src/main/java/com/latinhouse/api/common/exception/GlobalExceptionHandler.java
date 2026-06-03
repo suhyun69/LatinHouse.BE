@@ -72,4 +72,16 @@ public class GlobalExceptionHandler {
                         .build()))
                 .build();
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleRuntimeException(RuntimeException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field(null)
+                        .message("서버 내부 오류가 발생했습니다.")
+                        .build()))
+                .build();
+    }
 }

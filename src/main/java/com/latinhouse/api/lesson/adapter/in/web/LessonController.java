@@ -1,6 +1,7 @@
 package com.latinhouse.api.lesson.adapter.in.web;
 
 import com.latinhouse.api.lesson.application.port.in.CreateLessonUseCase;
+import com.latinhouse.api.lesson.application.port.in.CreateRandomLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonsUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import java.util.List;
 public class LessonController {
 
     private final CreateLessonUseCase createLessonUseCase;
+    private final CreateRandomLessonUseCase createRandomLessonUseCase;
     private final GetLessonUseCase getLessonUseCase;
     private final GetLessonsUseCase getLessonsUseCase;
 
@@ -39,6 +41,15 @@ public class LessonController {
                 )
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Operation(summary = "랜덤 수업 생성", description = "파라미터를 랜덤으로 생성하여 수업을 생성합니다.")
+    @PostMapping("/lesson/random")
+    public ResponseEntity<CreateRandomLessonWebResponse> createRandomLesson() {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CreateRandomLessonWebMapper.toWebResponse(
+                        createRandomLessonUseCase.createRandomLesson()
+                ));
     }
 
     @Operation(summary = "레슨 목록 조회", description = "레슨 옵션 단위 목록을 조회합니다. region, instructor, genre 필터를 선택적으로 적용합니다.")

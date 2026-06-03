@@ -5,6 +5,7 @@ import com.latinhouse.api.common.exception.GlobalExceptionHandler;
 import com.latinhouse.api.common.exception.LessonNotFoundException;
 import com.latinhouse.api.lesson.application.port.in.CreateLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.in.CreateLessonUseCase;
+import com.latinhouse.api.lesson.application.port.in.CreateRandomLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonsAppResponse;
@@ -45,6 +46,9 @@ class LessonControllerTest {
 
     @MockitoBean
     private CreateLessonUseCase createLessonUseCase;
+
+    @MockitoBean
+    private CreateRandomLessonUseCase createRandomLessonUseCase;
 
     @MockitoBean
     private GetLessonUseCase getLessonUseCase;
