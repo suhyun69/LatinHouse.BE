@@ -2,6 +2,7 @@ package com.latinhouse.api.lesson.adapter.in.web;
 
 import com.latinhouse.api.lesson.application.port.in.CreateLessonUseCase;
 import com.latinhouse.api.lesson.application.port.in.GetLessonUseCase;
+import com.latinhouse.api.lesson.application.port.in.GetLessonsUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Tag(name = "Lesson", description = "레슨 관리 API")
 @RestController
@@ -23,6 +27,7 @@ public class LessonController {
 
     private final CreateLessonUseCase createLessonUseCase;
     private final GetLessonUseCase getLessonUseCase;
+    private final GetLessonsUseCase getLessonsUseCase;
 
     @Operation(summary = "레슨 생성", description = "레슨 정보를 입력받아 레슨을 생성합니다.")
     @PostMapping("/lesson")
@@ -34,6 +39,20 @@ public class LessonController {
                 )
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Operation(summary = "레슨 목록 조회", description = "레슨 옵션 단위 목록을 조회합니다. region, instructor, genre 필터를 선택적으로 적용합니다.")
+    @GetMapping("/lessons")
+    public ResponseEntity<List<GetLessonsWebResponse>> getLessons(
+            @RequestParam(required = false) String region,
+            @RequestParam(required = false) String instructor,
+            @RequestParam(required = false) String genre) {
+        List<GetLessonsWebResponse> response = GetLessonsWebMapper.toWebResponseList(
+                getLessonsUseCase.getLessons(
+                        GetLessonsWebMapper.toAppRequest(region, instructor, genre)
+                )
+        );
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "레슨 단건 조회", description = "레슨 ID로 레슨 상세 정보를 조회합니다.")
