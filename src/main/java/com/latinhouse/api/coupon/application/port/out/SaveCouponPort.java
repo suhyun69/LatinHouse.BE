@@ -1,0 +1,9 @@
+package com.latinhouse.api.coupon.application.port.out;
+
+import com.latinhouse.api.coupon.domain.Coupon;
+
+import java.util.List;
+
+public interface SaveCouponPort {
+    void saveAll(List<Coupon> coupons);
+}
