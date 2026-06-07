@@ -85,6 +85,18 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(CouponNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleCouponNotFoundException(CouponNotFoundException ex) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .errors(List.of(ErrorResponse.FieldError.builder()
+                        .field("couponId")
+                        .message("쿠폰을 찾을 수 없습니다.")
+                        .build()))
+                .build();
+    }
+
     @ExceptionHandler(CouponTemplateNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleCouponTemplateNotFoundException(CouponTemplateNotFoundException ex) {

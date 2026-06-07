@@ -37,4 +37,8 @@ public class CouponEntity {
         this.owner = owner;
         this.status = status;
     }
+
+    public void updateOwner(String owner) {
+        this.owner = owner;
+    }
 }
