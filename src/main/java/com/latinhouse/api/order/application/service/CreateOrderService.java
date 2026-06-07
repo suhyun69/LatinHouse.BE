@@ -1,6 +1,10 @@
 package com.latinhouse.api.order.application.service;
 
 import com.latinhouse.api.common.exception.ProfileNotFoundException;
+import com.latinhouse.api.coupon.application.port.out.LoadCouponTemplatePort;
+import com.latinhouse.api.coupon.application.port.out.LoadCouponsByOwnerPort;
+import com.latinhouse.api.coupon.domain.CouponStatus;
+import com.latinhouse.api.coupon.domain.CouponTemplateType;
 import com.latinhouse.api.lesson.application.port.out.LoadLessonPort;
 import com.latinhouse.api.lesson.domain.DiscountType;
 import com.latinhouse.api.lesson.domain.Lesson;
@@ -34,6 +38,8 @@ public class CreateOrderService implements CreateOrderUseCase {
     private final LoadLessonOptionPort loadLessonOptionPort;
     private final FindProfilePort findProfilePort;
     private final SaveOrderPort saveOrderPort;
+    private final LoadCouponsByOwnerPort loadCouponsByOwnerPort;
+    private final LoadCouponTemplatePort loadCouponTemplatePort;
 
     @Override
     @Transactional
@@ -63,30 +69,41 @@ public class CreateOrderService implements CreateOrderUseCase {
     }
 
     private List<OrderDiscount> resolveDiscounts(Lesson lesson, Profile profile) {
-        List<LessonDiscount> lessonDiscounts = lesson.getDiscounts();
-        if (lessonDiscounts == null || lessonDiscounts.isEmpty()) {
-            return List.of();
-        }
-
         List<OrderDiscount> result = new ArrayList<>();
 
-        // SEX 할인: condition이 구매자 sex와 일치하는 경우만 적용
-        if (profile.getSex() != null) {
+        List<LessonDiscount> lessonDiscounts = lesson.getDiscounts();
+        if (lessonDiscounts != null && !lessonDiscounts.isEmpty()) {
+            // SEX 할인: condition이 구매자 sex와 일치하는 경우만 적용
+            if (profile.getSex() != null) {
+                lessonDiscounts.stream()
+                        .filter(d -> d.getType() == DiscountType.SEX)
+                        .filter(d -> d.getCondition().equals(profile.getSex().name()))
+                        .map(this::toOrderDiscount)
+                        .forEach(result::add);
+            }
+
+            // EARLYBIRD 할인: 만료되지 않은(condition >= today) 것 중 가장 이른 1건만 적용
+            LocalDate today = LocalDate.now();
             lessonDiscounts.stream()
-                    .filter(d -> d.getType() == DiscountType.SEX)
-                    .filter(d -> d.getCondition().equals(profile.getSex().name()))
+                    .filter(d -> d.getType() == DiscountType.EARLYBIRD)
+                    .filter(d -> !LocalDate.parse(d.getCondition()).isBefore(today))
+                    .min(Comparator.comparing(LessonDiscount::getCondition))
                     .map(this::toOrderDiscount)
-                    .forEach(result::add);
+                    .ifPresent(result::add);
         }
 
-        // EARLYBIRD 할인: 만료되지 않은(condition >= today) 것 중 가장 이른 1건만 적용
-        LocalDate today = LocalDate.now();
-        lessonDiscounts.stream()
-                .filter(d -> d.getType() == DiscountType.EARLYBIRD)
-                .filter(d -> !LocalDate.parse(d.getCondition()).isBefore(today))
-                .min(Comparator.comparing(LessonDiscount::getCondition))
-                .map(this::toOrderDiscount)
-                .ifPresent(result::add);
+        // COUPON 할인: owner=profileId, status=AVAILABLE, template.type=LESSON, template.target=lessonNo
+        loadCouponsByOwnerPort.findByOwner(profile.getId()).stream()
+                .filter(c -> c.getStatus() == CouponStatus.AVAILABLE)
+                .forEach(coupon -> loadCouponTemplatePort.findById(coupon.getTemplateId())
+                        .filter(t -> t.getType() == CouponTemplateType.LESSON)
+                        .filter(t -> t.getTarget().equals(lesson.getId()))
+                        .map(t -> OrderDiscount.builder()
+                                .discountType(OrderDiscountType.COUPON)
+                                .discountId(coupon.getId())
+                                .amount(t.getAmount())
+                                .build())
+                        .ifPresent(result::add));
 
         return result;
     }

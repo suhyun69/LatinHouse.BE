@@ -2,6 +2,7 @@ package com.latinhouse.api.coupon.adapter.out.persistence;
 
 import com.latinhouse.api.coupon.application.port.out.LoadCouponPort;
 import com.latinhouse.api.coupon.application.port.out.LoadCouponTemplatePort;
+import com.latinhouse.api.coupon.application.port.out.LoadCouponsByOwnerPort;
 import com.latinhouse.api.coupon.application.port.out.SaveCouponPort;
 import com.latinhouse.api.coupon.application.port.out.SaveCouponTemplatePort;
 import com.latinhouse.api.coupon.application.port.out.UpdateCouponPort;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-class CouponPersistenceAdapter implements SaveCouponTemplatePort, LoadCouponTemplatePort, SaveCouponPort, LoadCouponPort, UpdateCouponPort {
+class CouponPersistenceAdapter implements SaveCouponTemplatePort, LoadCouponTemplatePort, SaveCouponPort, LoadCouponPort, UpdateCouponPort, LoadCouponsByOwnerPort {
 
     private final CouponTemplateJpaRepository couponTemplateJpaRepository;
     private final CouponJpaRepository couponJpaRepository;
@@ -45,6 +46,13 @@ class CouponPersistenceAdapter implements SaveCouponTemplatePort, LoadCouponTemp
     public Optional<Coupon> findCouponById(Long couponId) {
         return couponJpaRepository.findById(couponId)
                 .map(CouponPersistenceMapper::toCouponDomain);
+    }
+
+    @Override
+    public List<Coupon> findByOwner(String owner) {
+        return couponJpaRepository.findByOwner(owner).stream()
+                .map(CouponPersistenceMapper::toCouponDomain)
+                .toList();
     }
 
     @Override
