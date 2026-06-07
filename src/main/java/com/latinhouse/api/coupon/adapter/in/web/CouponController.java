@@ -1,5 +1,6 @@
 package com.latinhouse.api.coupon.adapter.in.web;
 
+import com.latinhouse.api.coupon.application.port.in.AssignCouponUseCase;
 import com.latinhouse.api.coupon.application.port.in.CreateCouponTemplateUseCase;
 import com.latinhouse.api.coupon.application.port.in.CreateCouponUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ public class CouponController {
 
     private final CreateCouponTemplateUseCase createCouponTemplateUseCase;
     private final CreateCouponUseCase createCouponUseCase;
+    private final AssignCouponUseCase assignCouponUseCase;
 
     @Operation(summary = "쿠폰 템플릿 생성", description = "쿠폰 템플릿을 생성합니다.")
     @PostMapping("/coupon/template")
@@ -42,5 +46,18 @@ public class CouponController {
                 CouponWebMapper.toAppRequest(request)
         );
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "쿠폰 소유자 배정", description = "쿠폰의 소유자를 지정된 프로필로 배정합니다.")
+    @PatchMapping("/coupon/{profileId}")
+    public ResponseEntity<AssignCouponWebResponse> assignCoupon(
+            @PathVariable String profileId,
+            @Valid @RequestBody AssignCouponWebRequest request) {
+        AssignCouponWebResponse response = CouponWebMapper.toWebResponse(
+                assignCouponUseCase.assignCoupon(
+                        CouponWebMapper.toAppRequest(profileId, request)
+                )
+        );
+        return ResponseEntity.ok(response);
     }
 }

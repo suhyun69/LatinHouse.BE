@@ -1,5 +1,7 @@
 package com.latinhouse.api.coupon.adapter.in.web;
 
+import com.latinhouse.api.coupon.application.port.in.AssignCouponAppRequest;
+import com.latinhouse.api.coupon.application.port.in.AssignCouponAppResponse;
 import com.latinhouse.api.coupon.application.port.in.CreateCouponAppRequest;
 import com.latinhouse.api.coupon.application.port.in.CreateCouponTemplateAppRequest;
 import com.latinhouse.api.coupon.application.port.in.CreateCouponTemplateAppResponse;
@@ -27,5 +29,16 @@ class CouponWebMapper {
                 .templateId(webRequest.getTemplateId())
                 .count(webRequest.getCount())
                 .build();
+    }
+
+    static AssignCouponAppRequest toAppRequest(String profileId, AssignCouponWebRequest webRequest) {
+        return AssignCouponAppRequest.builder()
+                .profileId(profileId)
+                .couponId(webRequest.getCouponId())
+                .build();
+    }
+
+    static AssignCouponWebResponse toWebResponse(AssignCouponAppResponse appResponse) {
+        return new AssignCouponWebResponse(appResponse.getCouponId());
     }
 }
