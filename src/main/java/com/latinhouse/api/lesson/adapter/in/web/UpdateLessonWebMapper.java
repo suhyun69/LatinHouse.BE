@@ -1,6 +1,5 @@
 package com.latinhouse.api.lesson.adapter.in.web;
 
-import com.latinhouse.api.lesson.application.port.in.CreateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppResponse;
 import com.latinhouse.api.lesson.domain.ContactType;
@@ -40,11 +39,12 @@ public class UpdateLessonWebMapper {
                 .build();
     }
 
-    private static List<CreateLessonAppRequest.OptionAppReq> toOptionAppReqs(
+    private static List<UpdateLessonAppRequest.OptionAppReq> toOptionAppReqs(
             List<UpdateLessonWebRequest.OptionWebReq> webs) {
         if (webs == null) return Collections.emptyList();
         return webs.stream()
-                .map(w -> CreateLessonAppRequest.OptionAppReq.builder()
+                .map(w -> UpdateLessonAppRequest.OptionAppReq.builder()
+                        .id(w.getId())
                         .startDateTime(LocalDateTime.parse(w.getStartDate() + "T" + w.getStartTime()))
                         .endDateTime(LocalDateTime.parse(w.getEndDate() + "T" + w.getEndTime()))
                         .region(Region.fromCode(w.getRegion()))
@@ -54,11 +54,12 @@ public class UpdateLessonWebMapper {
                 .toList();
     }
 
-    private static List<CreateLessonAppRequest.DiscountAppReq> toDiscountAppReqs(
+    private static List<UpdateLessonAppRequest.DiscountAppReq> toDiscountAppReqs(
             List<UpdateLessonWebRequest.DiscountWebReq> webs) {
         if (webs == null) return Collections.emptyList();
         return webs.stream()
-                .map(w -> CreateLessonAppRequest.DiscountAppReq.builder()
+                .map(w -> UpdateLessonAppRequest.DiscountAppReq.builder()
+                        .id(w.getId())
                         .type(w.getType() != null ? DiscountType.fromCode(w.getType()) : null)
                         .condition(w.getCondition())
                         .amount(w.getAmount())
@@ -66,21 +67,23 @@ public class UpdateLessonWebMapper {
                 .toList();
     }
 
-    private static CreateLessonAppRequest.AccountAppReq toAccountAppReq(
+    private static UpdateLessonAppRequest.AccountAppReq toAccountAppReq(
             UpdateLessonWebRequest.AccountWebReq web) {
         if (web == null) return null;
-        return CreateLessonAppRequest.AccountAppReq.builder()
+        return UpdateLessonAppRequest.AccountAppReq.builder()
+                .id(web.getId())
                 .bank(web.getBank())
                 .account(web.getAccount())
                 .name(web.getName())
                 .build();
     }
 
-    private static List<CreateLessonAppRequest.ContactAppReq> toContactAppReqs(
+    private static List<UpdateLessonAppRequest.ContactAppReq> toContactAppReqs(
             List<UpdateLessonWebRequest.ContactWebReq> webs) {
         if (webs == null) return Collections.emptyList();
         return webs.stream()
-                .map(w -> CreateLessonAppRequest.ContactAppReq.builder()
+                .map(w -> UpdateLessonAppRequest.ContactAppReq.builder()
+                        .id(w.getId())
                         .type(w.getType() != null ? ContactType.fromCode(w.getType()) : null)
                         .account(w.getAccount())
                         .name(w.getName())
@@ -88,11 +91,12 @@ public class UpdateLessonWebMapper {
                 .toList();
     }
 
-    private static List<CreateLessonAppRequest.NoticeAppReq> toNoticeAppReqs(
+    private static List<UpdateLessonAppRequest.NoticeAppReq> toNoticeAppReqs(
             List<UpdateLessonWebRequest.NoticeWebReq> webs) {
         if (webs == null) return Collections.emptyList();
         return webs.stream()
-                .map(w -> CreateLessonAppRequest.NoticeAppReq.builder()
+                .map(w -> UpdateLessonAppRequest.NoticeAppReq.builder()
+                        .id(w.getId())
                         .type(w.getType() != null ? NoticeType.fromCode(w.getType()) : null)
                         .text(w.getText())
                         .build())

@@ -2,7 +2,6 @@ package com.latinhouse.api.lesson.application.service;
 
 import com.latinhouse.api.common.exception.ErrorResponse;
 import com.latinhouse.api.common.exception.LessonValidationException;
-import com.latinhouse.api.lesson.application.port.in.CreateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppMapper;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppResponse;
@@ -109,7 +108,7 @@ public class UpdateLessonService implements UpdateLessonUseCase {
     private void validateOptionDateTimes(UpdateLessonAppRequest request, List<ErrorResponse.FieldError> errors) {
         if (request.getOptions() == null) return;
         for (int i = 0; i < request.getOptions().size(); i++) {
-            CreateLessonAppRequest.OptionAppReq opt = request.getOptions().get(i);
+            UpdateLessonAppRequest.OptionAppReq opt = request.getOptions().get(i);
             if (opt.getStartDateTime() != null && opt.getEndDateTime() != null
                     && !opt.getStartDateTime().isBefore(opt.getEndDateTime())) {
                 errors.add(ErrorResponse.FieldError.builder()
@@ -123,7 +122,7 @@ public class UpdateLessonService implements UpdateLessonUseCase {
     private void validateDiscountConditions(UpdateLessonAppRequest request, List<ErrorResponse.FieldError> errors) {
         if (request.getDiscounts() == null) return;
         for (int i = 0; i < request.getDiscounts().size(); i++) {
-            CreateLessonAppRequest.DiscountAppReq discount = request.getDiscounts().get(i);
+            UpdateLessonAppRequest.DiscountAppReq discount = request.getDiscounts().get(i);
             if (discount.getType() == null || discount.getCondition() == null) continue;
 
             if (discount.getType() == DiscountType.EARLYBIRD) {

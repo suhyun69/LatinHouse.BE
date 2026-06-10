@@ -2,7 +2,6 @@ package com.latinhouse.api.lesson.application.service;
 
 import com.latinhouse.api.common.exception.LessonNotFoundException;
 import com.latinhouse.api.common.exception.LessonValidationException;
-import com.latinhouse.api.lesson.application.port.in.CreateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppRequest;
 import com.latinhouse.api.lesson.application.port.in.UpdateLessonAppResponse;
 import com.latinhouse.api.lesson.application.port.out.LoadInstructorPort;
@@ -54,7 +53,7 @@ class UpdateLessonServiceTest {
                 .title("살사 중급반")
                 .genre(Genre.SALSA)
                 .instructorLo("loId")
-                .options(List.of(CreateLessonAppRequest.OptionAppReq.builder()
+                .options(List.of(UpdateLessonAppRequest.OptionAppReq.builder()
                         .startDateTime(START).endDateTime(END).region(Region.GANGNAM)
                         .build()))
                 .build();
@@ -97,7 +96,7 @@ class UpdateLessonServiceTest {
         UpdateLessonAppRequest request = UpdateLessonAppRequest.builder()
                 .lessonNo(1L).title("살사 중급반").genre(Genre.SALSA)
                 .instructorLo(null).instructorLa(null)
-                .options(List.of(CreateLessonAppRequest.OptionAppReq.builder()
+                .options(List.of(UpdateLessonAppRequest.OptionAppReq.builder()
                         .startDateTime(START).endDateTime(END).region(Region.GANGNAM).build()))
                 .build();
 
@@ -115,7 +114,7 @@ class UpdateLessonServiceTest {
         UpdateLessonAppRequest request = UpdateLessonAppRequest.builder()
                 .lessonNo(1L).title("살사 중급반").genre(Genre.SALSA)
                 .instructorLo("femaleId")
-                .options(List.of(CreateLessonAppRequest.OptionAppReq.builder()
+                .options(List.of(UpdateLessonAppRequest.OptionAppReq.builder()
                         .startDateTime(START).endDateTime(END).region(Region.GANGNAM).build()))
                 .build();
 
@@ -133,7 +132,7 @@ class UpdateLessonServiceTest {
         UpdateLessonAppRequest request = UpdateLessonAppRequest.builder()
                 .lessonNo(1L).title("살사 중급반").genre(Genre.SALSA)
                 .instructorLo("loId")
-                .options(List.of(CreateLessonAppRequest.OptionAppReq.builder()
+                .options(List.of(UpdateLessonAppRequest.OptionAppReq.builder()
                         .startDateTime(END).endDateTime(START).region(Region.GANGNAM).build()))
                 .build();
 
@@ -151,9 +150,9 @@ class UpdateLessonServiceTest {
         UpdateLessonAppRequest request = UpdateLessonAppRequest.builder()
                 .lessonNo(1L).title("살사 중급반").genre(Genre.SALSA)
                 .instructorLo("loId")
-                .options(List.of(CreateLessonAppRequest.OptionAppReq.builder()
+                .options(List.of(UpdateLessonAppRequest.OptionAppReq.builder()
                         .startDateTime(START).endDateTime(END).region(Region.GANGNAM).build()))
-                .discounts(List.of(CreateLessonAppRequest.DiscountAppReq.builder()
+                .discounts(List.of(UpdateLessonAppRequest.DiscountAppReq.builder()
                         .type(DiscountType.EARLYBIRD).condition("not-a-date").build()))
                 .build();
 

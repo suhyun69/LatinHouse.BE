@@ -21,6 +21,7 @@ class LessonPersistenceMapper {
 
     static LessonEntity toEntity(Lesson lesson) {
         return LessonEntity.builder()
+                .id(lesson.getId())
                 .title(lesson.getTitle())
                 .genre(lesson.getGenre().getCode())
                 .instructorLo(lesson.getInstructorLo())
@@ -56,6 +57,7 @@ class LessonPersistenceMapper {
         if (options == null) return Collections.emptyList();
         return options.stream()
                 .map(o -> LessonOptionEntity.builder()
+                        .id(o.getId())
                         .startDateTime(o.getStartDateTime())
                         .endDateTime(o.getEndDateTime())
                         .region(o.getRegion().getCode())
@@ -69,6 +71,7 @@ class LessonPersistenceMapper {
         if (discounts == null) return Collections.emptyList();
         return discounts.stream()
                 .map(d -> LessonDiscountEntity.builder()
+                        .id(d.getId())
                         .type(d.getType().getCode())
                         .conditionValue(d.getCondition())
                         .amount(d.getAmount())
@@ -79,6 +82,7 @@ class LessonPersistenceMapper {
     private static LessonAccountEntity toAccountEntity(LessonAccount account) {
         if (account == null) return null;
         return LessonAccountEntity.builder()
+                .id(account.getId())
                 .bank(account.getBank())
                 .account(account.getAccount())
                 .name(account.getName())
@@ -89,6 +93,7 @@ class LessonPersistenceMapper {
         if (contacts == null) return Collections.emptyList();
         return contacts.stream()
                 .map(c -> LessonContactEntity.builder()
+                        .id(c.getId())
                         .type(c.getType().getCode())
                         .account(c.getAccount())
                         .name(c.getName())
@@ -100,6 +105,7 @@ class LessonPersistenceMapper {
         if (notices == null) return Collections.emptyList();
         return notices.stream()
                 .map(n -> LessonNoticeEntity.builder()
+                        .id(n.getId())
                         .type(n.getType().getCode())
                         .text(n.getText())
                         .build())

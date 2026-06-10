@@ -37,10 +37,11 @@ public class UpdateLessonAppMapper {
                 .build();
     }
 
-    private static List<LessonOption> toOptionDomains(List<CreateLessonAppRequest.OptionAppReq> reqs) {
+    private static List<LessonOption> toOptionDomains(List<UpdateLessonAppRequest.OptionAppReq> reqs) {
         if (reqs == null) return Collections.emptyList();
         return reqs.stream()
                 .map(r -> LessonOption.builder()
+                        .id(r.getId())
                         .startDateTime(r.getStartDateTime())
                         .endDateTime(r.getEndDateTime())
                         .region(r.getRegion())
@@ -50,10 +51,11 @@ public class UpdateLessonAppMapper {
                 .toList();
     }
 
-    private static List<LessonDiscount> toDiscountDomains(List<CreateLessonAppRequest.DiscountAppReq> reqs) {
+    private static List<LessonDiscount> toDiscountDomains(List<UpdateLessonAppRequest.DiscountAppReq> reqs) {
         if (reqs == null) return Collections.emptyList();
         return reqs.stream()
                 .map(r -> LessonDiscount.builder()
+                        .id(r.getId())
                         .type(r.getType())
                         .condition(r.getCondition())
                         .amount(r.getAmount())
@@ -61,19 +63,21 @@ public class UpdateLessonAppMapper {
                 .toList();
     }
 
-    private static LessonAccount toAccountDomain(CreateLessonAppRequest.AccountAppReq req) {
+    private static LessonAccount toAccountDomain(UpdateLessonAppRequest.AccountAppReq req) {
         if (req == null) return null;
         return LessonAccount.builder()
+                .id(req.getId())
                 .bank(req.getBank())
                 .account(req.getAccount())
                 .name(req.getName())
                 .build();
     }
 
-    private static List<LessonContact> toContactDomains(List<CreateLessonAppRequest.ContactAppReq> reqs) {
+    private static List<LessonContact> toContactDomains(List<UpdateLessonAppRequest.ContactAppReq> reqs) {
         if (reqs == null) return Collections.emptyList();
         return reqs.stream()
                 .map(r -> LessonContact.builder()
+                        .id(r.getId())
                         .type(r.getType())
                         .account(r.getAccount())
                         .name(r.getName())
@@ -81,10 +85,11 @@ public class UpdateLessonAppMapper {
                 .toList();
     }
 
-    private static List<LessonNotice> toNoticeDomains(List<CreateLessonAppRequest.NoticeAppReq> reqs) {
+    private static List<LessonNotice> toNoticeDomains(List<UpdateLessonAppRequest.NoticeAppReq> reqs) {
         if (reqs == null) return Collections.emptyList();
         return reqs.stream()
                 .map(r -> LessonNotice.builder()
+                        .id(r.getId())
                         .type(r.getType())
                         .text(r.getText())
                         .build())

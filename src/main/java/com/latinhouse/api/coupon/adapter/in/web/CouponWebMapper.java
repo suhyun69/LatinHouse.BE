@@ -14,7 +14,7 @@ class CouponWebMapper {
     static CreateCouponTemplateAppRequest toAppRequest(CreateCouponTemplateWebRequest webRequest) {
         return CreateCouponTemplateAppRequest.builder()
                 .title(webRequest.getTitle())
-                .type(CouponTemplateType.valueOf(webRequest.getType()))
+                .type(CouponTemplateType.valueOf(webRequest.getType().toUpperCase()))
                 .target(webRequest.getTarget())
                 .amount(webRequest.getAmount())
                 .build();

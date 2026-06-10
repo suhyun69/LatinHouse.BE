@@ -47,6 +47,8 @@ public class UpdateLessonWebRequest {
     @NoArgsConstructor
     public static class OptionWebReq {
 
+        private Long id;
+
         @NotBlank(message = "시작 날짜를 입력해 주세요.")
         @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "시작 날짜는 yyyy-MM-dd 형식으로 입력해 주세요.")
         private String startDate;
@@ -75,6 +77,8 @@ public class UpdateLessonWebRequest {
     @NoArgsConstructor
     public static class DiscountWebReq {
 
+        private Long id;
+
         @Pattern(regexp = "^[ES]$", message = "할인 타입은 E 또는 S만 입력 가능합니다.")
         private String type;
 
@@ -85,6 +89,7 @@ public class UpdateLessonWebRequest {
     @Getter
     @NoArgsConstructor
     public static class AccountWebReq {
+        private Long id;
         private String bank;
         private String account;
         private String name;
@@ -93,6 +98,8 @@ public class UpdateLessonWebRequest {
     @Getter
     @NoArgsConstructor
     public static class ContactWebReq {
+
+        private Long id;
 
         @Pattern(regexp = "^[YKWILM]$", message = "연락처 타입이 올바르지 않습니다.")
         private String type;
@@ -104,6 +111,8 @@ public class UpdateLessonWebRequest {
     @Getter
     @NoArgsConstructor
     public static class NoticeWebReq {
+
+        private Long id;
 
         @Pattern(regexp = "^[LTRNU]$", message = "공지 타입이 올바르지 않습니다.")
         private String type;
